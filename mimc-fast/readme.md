@@ -20,25 +20,12 @@ The rust miner on the same machine as your game can be faster than the javascrip
 
 - Install [rust for your operating system](https://www.rust-lang.org/tools/install) probably with `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 - Install with `cargo install --git https://github.com/jacobrosenthal/mimc-fast --branch v6-warp-split`
-- Run it with `RUST_LOG=info mimc-fast` (which also turns on logging)
+- Run it (with logs enabled environment variable) like `RUST_LOG=info mimc-fast`
 - Connect to it with an in game plugin like [RemoteExplorePlugin.js](https://github.com/darkforest-eth/plugins/tree/master/content/productivity/remote-explore)
 
-### google cloud run
+### tuning
 
-Be warned this costs money. Google apparently offer a bunch of free credits to
-start though so this can be cheap for a while. I offer no support for this so
-don't post questions about this cloud service, or any others. PRs are welcome to
-make the docker files more accomodating though.
-
-- Fork the plugin to your own repo on Github
-- Make a new project on Google Cloud Run
-- Go to <https://console.cloud.google.com/run>
-- Click "+ Create Service"
-- Choose the server you wanna use and the name of the service
-- Choose "continuously deploy from source repository
-- Click "setup with cloud build" and then connect it to the repo
-- Change the advanced settings - port is 8000 and then change the memory/cpus according to what you want (2gb memory, 4cpu has been reported as ~4k hashes)
-- Setup trigger and then start it
+By defualt the miner uses as much of your processor as possible. This is good if you're on a cloud machine, but not great if you're also trying to run the game. A single processor machine with 4 cores, and 2 threads per core, has 8 threads available. Adjust for your machine, but you might try 4 or 6 threads and see if you dont get even a little better performance because its not competing with the game for resources. You can set the amount of threads to use with an environment variable before the executable like `RAYON_NUM_THREADS=4 mimc-fast`
 
 ## Troubleshooting
 
@@ -49,5 +36,3 @@ To test its working you can do a quick curl `curl --data '{"chunkFootprint": { "
 Remember to pause the built in miner if you're running it on the same machine as
 the game client or theyll just fight eachother.
 
-If its taking too much performance from the rest of your desktop experience you
-can try running with limited cores `RAYON_NUM_THREADS=4 cargo run`

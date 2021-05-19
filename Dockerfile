@@ -1,27 +1,16 @@
 # Based on https://github.com/DazWilkin/do-apps-rust
-FROM rustlang/rust:nightly-slim as builder
-
-RUN USER=root cargo new --bin mimc-fast
-
-WORKDIR /mimc-fast
-
-COPY ./Cargo.toml ./Cargo.toml
-RUN cargo build --release
-RUN rm src/*.rs
-
+FROM rust:1.52 as builder
+WORKDIR /app
 ADD . ./
-
-RUN rm ./target/release/deps/mimc_fast*
-
+RUN echo "fn main() { println!(\"Hello, world!\");}" > ./mimc-fast/src/main.rs
 RUN cargo build --release
-
+COPY ./mimc-fast/src/main.rs ./mimc-fast/src/main.rs
+RUN rm /app/target/release/deps/mimc_fast*
+RUN cargo build --release
 
 FROM debian:buster-slim as runtime
-
 WORKDIR /bin
-
-# Copy from builder and rename to 'server'
-COPY --from=builder /mimc-fast/target/release/mimc-fast ./server
+COPY --from=builder /app/target/release/mimc-fast ./server
 
 RUN apt-get update \
     && apt-get install -y ca-certificates tzdata \
