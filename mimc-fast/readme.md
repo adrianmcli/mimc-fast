@@ -19,9 +19,9 @@ cloud or even a rapsberry pi 4 has been found to provide 1-2k hashes.
 The rust miner on the same machine as your game can be faster than the javascript because it can more fully utilize the processor. But if you're running on the same machine as the game, pause the in game miner. They're just going to compete with eachother and give you worse peformance.
 
 - Install [rust for your operating system](https://www.rust-lang.org/tools/install) probably with `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
-- Install with `cargo install --git https://github.com/jacobrosenthal/mimc-fast --branch v6-warp-split`
-- Run it (with logs enabled environment variable) like `RUST_LOG=info mimc-fast`
-- Connect to it with an in game plugin like [RemoteExplorePlugin.js](https://github.com/darkforest-eth/plugins/tree/master/content/productivity/remote-explore)
+- Install with `cargo install --git https://github.com/jacobrosenthal/mimc-fast --branch v6-warp-split --force`
+- Run it (with logging enabled environment variable) with `RUST_LOG=info mimc-fast`
+- Connect to it with an the built in game plugin RemoteExplorePlugin
 
 ### tuning
 

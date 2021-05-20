@@ -13,12 +13,12 @@ don't post questions about this cloud service, or any others. PRs are welcome to
 make the docker files more accomodating though.
 
 - Fork the plugin to your own repo on Github
-- Make a new project on Google Cloud Run
-- Go to <https://console.cloud.google.com/run>
+- Go to <https://console.cloud.google.com/run> and follow any prompts to enable your account.
 - Click "+ Create Service"
-- Choose the server you wanna use and name the service whatever and click Next.
-- Choose "continuously deploy from source repository
-- Click "Setup with cloud build", select github, allow access to your forked repository and choose that repository. Click Next
-- Under Build type choose Dockerfile and source location is /mimc-fast/Dockerfile and click Next.
-- Back on create service, Advanced Settings, change container port to 8000 and change the memory/cpus according to what you want (2gb memory, 4cpu has been reported as ~4k hashes)
-- Setup authentication (if none, don't share your url because anyone else could access it) and then start it
+- Name the service whatever and it'll choose a server region for you. Click Next.
+- Choose "continuously deploy new revisions from a source repository" and click "Setup with cloud build."
+- Select github, allow access to your forked repository and choose that repository, and select the v6-warp-split branch.
+- Select "Build Type" Dockerfile and click Save.
+- Click "Advanced Settings", Under "General" change "Container Port" to 8000
+- Under "Capacity" change the memory/cpus according to what you want (2gb memory, 4cpu has been reported as ~4k hashes) and click Next.
+- Under "authentication" choose an option. If allow unauthenticated remember not to share your url because anyone else could access it) and click Create.
